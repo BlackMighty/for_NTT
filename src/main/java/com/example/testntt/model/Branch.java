@@ -12,10 +12,16 @@ import javax.persistence.ManyToOne;
  */
 @Entity
 public class Branch {
+        /**
+         * Ссылка на организацию, к которой относится данная сущность.
+         */
         @ManyToOne
         @JoinColumn(name = "organization_id")
         private Organization organization;
 
+        /**
+         * Уникальный идентификатор филиала.
+         */
         @Id
         private Long id;
 
