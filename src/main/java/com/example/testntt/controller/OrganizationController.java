@@ -4,6 +4,7 @@ import com.example.testntt.service.OrganizationService;
 import com.example.testntt.model.Organization;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -59,8 +60,8 @@ public class OrganizationController {
     /**
      * Обновление информации об организации.
      *
-     * @param id            идентификатор организации
-     * @param organization  новая информация об организации
+     * @param id           идентификатор организации
+     * @param organization новая информация об организации
      * @return обновленная организация
      */
     @PutMapping("/{id}")
@@ -76,6 +77,10 @@ public class OrganizationController {
     @DeleteMapping("/{id}")
     public void deleteOrganization(@PathVariable Long id) {
         organizationService.deleteOrganization(id);
+    }
+    @GetMapping("/search")
+    public List<Organization> searchOrganizations(@RequestParam("query") String searchQuery) {
+        return organizationService.searchOrganizations(searchQuery);
     }
 }
 

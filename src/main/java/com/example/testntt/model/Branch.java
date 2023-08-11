@@ -1,10 +1,8 @@
 package com.example.testntt.model;
 
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
+import java.time.LocalDate;
 
 /**
  * Класс, представляющий филиал организации.
@@ -54,7 +52,7 @@ public class Branch {
         /**
          * Дата рождения руководителя филиала.
          */
-        private String directorBirthDate;
-
+        @Column(name = "branch_director_birth_date")
+        private LocalDate directorBirthDate;
 }
 

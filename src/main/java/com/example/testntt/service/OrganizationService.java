@@ -6,13 +6,9 @@ import org.springframework.stereotype.Service;
 
 
 import javax.persistence.EntityNotFoundException;
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
+import javax.persistence.criteria.Predicate;
 import java.util.List;
+
 
 /**
  * Сервис для работы с организациями.
@@ -92,4 +88,39 @@ public class OrganizationService {
     public void deleteOrganization(Long id) {
         organizationRepository.deleteById(id);
     }
+    /**
+            * Поиск организаций по поисковой строке.
+     *
+             * @param searchQuery поисковая строка
+     * @return список организаций, удовлетворяющих поисковому запросу
+     */
+    public List<Organization> searchOrganizations(String searchQuery) {
+        return organizationRepository.findAll((root, query, criteriaBuilder) -> {
+            String searchWildcard = "%" + searchQuery + "%";
+
+            Predicate fullNamePredicate = criteriaBuilder.like(root.get("fullName"), searchWildcard);
+            Predicate shortNamePredicate = criteriaBuilder.like(root.get("shortName"), searchWildcard);
+            Predicate innPredicate = criteriaBuilder.like(root.get("inn"), searchWildcard);
+            Predicate ogrnPredicate = criteriaBuilder.like(root.get("ogrn"), searchWildcard);
+            Predicate postalAddressPredicate = criteriaBuilder.like(root.get("postalAddress"), searchWildcard);
+            Predicate legalAddressPredicate = criteriaBuilder.like(root.get("legalAddress"), searchWildcard);
+            Predicate directorLastNamePredicate = criteriaBuilder.like(root.get("directorLastName"), searchWildcard);
+            Predicate directorFirstNamePredicate = criteriaBuilder.like(root.get("directorFirstName"), searchWildcard);
+            Predicate directorMiddleNamePredicate = criteriaBuilder.like(root.get("directorMiddleName"), searchWildcard);
+
+            return criteriaBuilder.or(
+                    fullNamePredicate,
+                    shortNamePredicate,
+                    innPredicate,
+                    ogrnPredicate,
+                    postalAddressPredicate,
+                    legalAddressPredicate,
+                    directorLastNamePredicate,
+                    directorFirstNamePredicate,
+                    directorMiddleNamePredicate
+
+            );
+        });
+    }
+
 }

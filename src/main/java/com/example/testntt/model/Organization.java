@@ -1,10 +1,8 @@
 package com.example.testntt.model;
 import lombok.Data;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
+import java.time.LocalDate;
 import java.util.List;
 /**
  * Объект данных представляет сведения по одной организации.
@@ -66,7 +64,9 @@ public class Organization {
         /**
          * Дата рождения генерального директора организации.
          */
-        private String directorBirthDate;
+        @Column(name = "director_birth_date")
+        private LocalDate directorBirthDate;
+
 
         /**
          * Список филиалов организации.
